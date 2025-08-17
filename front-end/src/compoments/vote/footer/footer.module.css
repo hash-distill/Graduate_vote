@@ -1,0 +1,27 @@
+.bottom {
+    position: fixed;
+    height: 60px;
+    bottom: 0%;
+    width: 100%;
+    left: 0;
+    padding-top: 20px;
+    box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    z-index: 99;
+    min-width: 1480px;
+}
+
+.limit {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 1.2em;
+    min-width: 400px;
+}
+
+.limitmark {
+    color: red;
+    font-weight: bold;
+}
