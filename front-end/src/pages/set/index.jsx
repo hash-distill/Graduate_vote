@@ -2,6 +2,7 @@ import Header from "../../compoments/vote/header"
 import axios from "axios";
 import styles from './set.module.css'
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
 
 const Set = (() => {
 
@@ -14,21 +15,15 @@ const Set = (() => {
   const navigate = useNavigate()
 
   const set_message = () => {
-    // console.log(state)
     axios({
-      method: 'post',//请求方式
-      url: 'http://localhost:8081/admin/setMsg',//请求地址
-      params: '',//和url一起发送的数据（如get请求）
-      data: JSON.stringify({ limit: state.limit, teachers: state.teachers, students: state.students }),//必要参数，
-      // 自定义请求头
+      method: 'post',
+      url: `${API_BASE_URL}/admin/setMsg`,
+      params: '',
+      data: JSON.stringify({ limit: state.limit, teachers: state.teachers, students: state.students }),
       headers: { 'Content-Type': 'application/json' },
     }).then(
       res => {
-        // console.log(res)
         navigate("/show", { replace: true })
-        // this.setState({
-        //   data:res.data.data
-        // })
       }
     )
   }
@@ -39,7 +34,6 @@ const Set = (() => {
       ? target.checked
       : target.value
 
-    //获取name
     const name = target.name
     state[name] = value
   }

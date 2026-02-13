@@ -3,6 +3,7 @@ import styles from './userShow.module.css'
 import axios from "axios";
 import { Component } from 'react';
 import Header from "../../compoments/vote/header";
+import { API_BASE_URL } from "../../config";
 
 class UserShow extends Component {
     state = {
@@ -17,11 +18,10 @@ class UserShow extends Component {
 
     componentDidMount() {
         axios({
-            method: 'post',//请求方式
-            url: 'http://localhost:8081/admin/getVoteResult',//请求地址
-            params: '',//和url一起发送的数据（如get请求）
-            data: '',//必要参数，
-            // 自定义请求头
+            method: 'post',
+            url: `${API_BASE_URL}/admin/getVoteResult`,
+            params: '',
+            data: '',
         }).then(
             res => {
                 if (res.data.msg == 'success') {
@@ -42,16 +42,14 @@ class UserShow extends Component {
                         message: ""
                     })
                 }
-                // console.log(this.state.revoteResult);
             })
 
-        setInterval(() => {
+        this.timer = setInterval(() => {
             axios({
-                method: 'post',//请求方式
-                url: 'http://localhost:8081/admin/getVoteResult',//请求地址
-                params: '',//和url一起发送的数据（如get请求）
-                data: '',//必要参数，
-                // 自定义请求头
+                method: 'post',
+                url: `${API_BASE_URL}/admin/getVoteResult`,
+                params: '',
+                data: '',
             }).then(
                 res => {
                     if (res.data.msg == 'success') {
@@ -66,9 +64,14 @@ class UserShow extends Component {
                         revoteResult: res.data.data.revoteResult == null ? {} : res.data.data.revoteResult,
                         preRevoteResult: res.data.data.preRevoteResult == null ? {} : res.data.data.preRevoteResult,
                     })
-                    // console.log(this.state.revoteResult);
                 })
-        }, 5000);    
+        }, 5000);
+    }
+
+    componentWillUnmount() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
     }
 
     render() {
@@ -79,9 +82,9 @@ class UserShow extends Component {
                 <h1>第 26 届研究生支教团选拔结果</h1>
                 <table>
                     <tr className={styles.tablehead}>
-                        <th style={{ minWidth: 80, WebkitBorderTopLeftRadius: 15 }}>排名</th>
+                        <th style={{ minWidth: 80, borderTopLeftRadius: 15 }}>排名</th>
                         <th style={{ minWidth: 260 }}>学院</th>
-                        <th style={{ minWidth: 100, WebkitBorderTopRightRadius: 15 }}>姓名</th>
+                        <th style={{ minWidth: 100, borderTopRightRadius: 15 }}>姓名</th>
                     </tr>
                     {this.state.student.map(item => {
                         i++;

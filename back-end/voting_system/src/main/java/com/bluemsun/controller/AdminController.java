@@ -12,7 +12,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.apache.tomcat.util.bcel.classfile.ElementValue.STRING;
 
 @RestController
 @RequestMapping("/admin")
@@ -148,12 +146,13 @@ public class AdminController {
         // 获取前端传送的设置信息
         Integer limit = map.get("limit");   // 限投几票
         Integer teachers = map.get("teachers"); // 参与投票的老师人数
-        Integer teachers_all = teachers;    // 使用teachers_all存储老师人数
         Integer students = map.get("students"); // 正选需要选出多少人
-        if(limit!=null && teachers!=null && students!=null){
-            // 数据不为空，则设置成功
-            rt = new ResultDto<>(true, "设置成功", null);
+        if(limit == null || teachers == null || students == null){
+            return rt;
         }
+        Integer teachers_all = teachers;    // 使用teachers_all存储老师人数
+        // 数据不为空，则设置成功
+        rt = new ResultDto<>(true, "设置成功", null);
         ServletContext application = request.getServletContext();   // application域对象
         // 将用到的各种参数存入数据域
         application.setAttribute("limit", limit);
@@ -306,7 +305,7 @@ public class AdminController {
         }
 
         List<User> pre = (List<User>) application.getAttribute("pre");
-        if(pre.size() != 2){
+        if(pre.size() != PRENUM){
             // 候补全部确定之后，一起返回给前端
             map.put("pre", null);
         }

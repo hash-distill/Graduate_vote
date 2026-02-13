@@ -3,6 +3,7 @@ import styles from './form.module.css'
 import axios from 'axios'
 import Footer from '../footer';
 import Confirm from '../confirm';
+import { API_BASE_URL } from '../../../config';
 var checkLimit = 3;
 
 // 投票表单
@@ -30,7 +31,7 @@ class Form extends Component {
 
   // 学生获取
   componentDidMount() {
-    axios.get('http://localhost:8081/users').then(res => {
+    axios.get(`${API_BASE_URL}/users`).then(res => {
       // console.log(res.data.data.revote, "====")
       checkLimit = res.data.data.limit
       // console.log(checkLimit)
@@ -120,7 +121,7 @@ class Form extends Component {
 
           <table>
             <tr className={styles.tablehead}>
-              <th style={{ WebkitBorderTopLeftRadius: 15 }}>序号</th>
+              <th style={{ borderTopLeftRadius: 15 }}>序号</th>
               <th>学院</th>
               <th>专业</th>
               <th>姓名</th>
@@ -128,7 +129,7 @@ class Form extends Component {
               <th>政治面貌</th>
               <th>学院排序</th>
               <th>面试序号</th>
-              <th style={{ WebkitBorderTopRightRadius: 15 }}>是否同意</th>
+              <th style={{ borderTopRightRadius: 15 }}>是否同意</th>
             </tr>
 
             {this.state.students.map((item, index) => {

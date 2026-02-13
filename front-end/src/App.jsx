@@ -17,7 +17,6 @@ function App() {
         <Route path='/waiting' element={<Waiting />} />
         <Route path='/set' element={<Set />} />
         <Route path='/end' element={<End />} />
-        <Route path='/end' element={<End />} />
         <Route path='/usershow' element={<UserShow />} />
       </Routes>
     </div>

@@ -63,7 +63,7 @@ button:hover {
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto #0492f7;
 }
 
 @media (prefers-color-scheme: light) {

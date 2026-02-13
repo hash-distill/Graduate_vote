@@ -3,6 +3,7 @@ import { Button, Modal } from 'antd'
 import styles from './button.module.css'
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../config";
 
 // 提交按钮
 const Submit = ((props) => {
@@ -18,35 +19,17 @@ const Submit = ((props) => {
 
     const sentResult = () => {
         setVisible(false);
-        
-        if (props.check != props.limit) {
-            axios({
-                method: 'post',//请求方式
-                url: 'http://localhost:8081/vote',//请求地址
-                params: '',//和url一起发送的数据（如get请求）
-                data: props.list,//必要参数，
-                // 自定义请求头
-            }).then(
-                res => {
-                    // console.log(res)
-                    navigate("/waiting", { replace: true })
-                }
-            )
-        }
-        else {
-            axios({
-                method: 'post',//请求方式
-                url: 'http://localhost:8081/vote',//请求地址
-                params: '',//和url一起发送的数据（如get请求）
-                data: props.list,//必要参数，
-                // 自定义请求头
-            }).then(
-                res => {
-                    // console.log(res)
-                    navigate("/waiting", { replace: true })
-                }
-            )
-        }
+
+        axios({
+            method: 'post',
+            url: `${API_BASE_URL}/vote`,
+            params: '',
+            data: props.list,
+        }).then(
+            res => {
+                navigate("/waiting", { replace: true })
+            }
+        )
     }
 
     return (

@@ -2,6 +2,7 @@ import React from "react"
 import styles from './totalcount.module.css'
 import { Component } from 'react';
 import axios from "axios";
+import { API_BASE_URL } from "../../../config";
 
 // 接收当前投票人数
 class Totalcount extends Component {
@@ -13,11 +14,10 @@ class Totalcount extends Component {
 
     componentDidMount() {
         axios({
-            method: 'post',//请求方式
-            url: 'http://localhost:8081/admin/getVoteResult',//请求地址
-            params: '',//和url一起发送的数据（如get请求）
-            data: '',//必要参数，
-            // 自定义请求头
+            method: 'post',
+            url: `${API_BASE_URL}/admin/getVoteResult`,
+            params: '',
+            data: '',
         }).then(
             res => {
                 if (res.data.msg == 'success') {
@@ -31,13 +31,12 @@ class Totalcount extends Component {
                 })
             })
 
-        setInterval(() => {
+        this.timer = setInterval(() => {
             axios({
-                method: 'post',//请求方式
-                url: 'http://localhost:8081/admin/getVoteResult',//请求地址
-                params: '',//和url一起发送的数据（如get请求）
-                data: '',//必要参数，
-                // 自定义请求头
+                method: 'post',
+                url: `${API_BASE_URL}/admin/getVoteResult`,
+                params: '',
+                data: '',
             }).then(
                 res => {
                     if (res.data.msg == 'success') {
@@ -51,6 +50,12 @@ class Totalcount extends Component {
                     })
                 })
         }, 5000);
+    }
+
+    componentWillUnmount() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
     }
 
     render() {
