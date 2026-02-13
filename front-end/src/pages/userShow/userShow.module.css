@@ -1,0 +1,53 @@
+.student {
+    width: 100%;
+    height: 50px;
+    border: none;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
+}
+
+.userShow {
+    margin-top: 100px;
+    padding-bottom: 60px;
+    overflow: visible;
+}
+
+.userShow table {
+    width: 60%;
+    border-collapse: collapse;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* border-radius: 15px; */
+    background-image: url(/photo/mark.png);
+    background-repeat: no-repeat;
+    background-size: 550px;
+    background-position: center;
+}
+
+.usershow th,
+.usershow td {
+    border: none;
+    padding: 10px;
+    text-align: center;
+}
+
+.usershow th {
+    background-color: rgba(9, 50, 101, 1);
+    height: 50px;
+    font-weight: bold;
+    font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+    color: #fff;
+}
+
+.blank {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+}
+
+.tablehead {
+    position: sticky;
+    top: 86px;
+}

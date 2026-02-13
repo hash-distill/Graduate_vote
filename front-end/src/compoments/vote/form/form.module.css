@@ -1,0 +1,138 @@
+.student {
+    width: 100%;
+    height: 50px;
+    border: none;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
+}
+
+.toptitle {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.form {
+    padding: 460px;
+    background-image: url(/photo/mark.png);
+    background-repeat: no-repeat;
+    background-position: 50% 300px;
+    background-size: 550px;
+    overflow: visible;
+}
+
+.form table {
+    width: 80%;
+    border-collapse: collapse;
+    position: absolute;
+    top: 750px;
+    left: 50%;
+    bottom: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+.form input[type=checkbox] {
+    width: 24px;
+    height: 24px;
+    margin-top: 4px;
+    border: none;
+    position: relative;
+}
+
+.form input[type=checkbox]::after {
+    position: absolute;
+    top: 0;
+    color: #000;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    visibility: visible;
+    padding-left: 0px;
+    text-align: center;
+    content: ' ';
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    background-color: #fff;
+}
+
+.form input[type=checkbox]:checked::after {
+    content: "✓";
+    color: #fff;
+    font-size: 30px;
+    line-height: 22.5px;
+    background-color: #0492f7;
+    border-color: #0492f7;
+}
+
+tr:nth-child(even) {
+    background-color: #ffffff00;
+}
+
+tr:nth-child(odd) {
+    background-color: rgba(9, 50, 101, 0.111);
+}
+
+.form th,
+.form td {
+    border: none;
+    padding: 10px;
+    text-align: center;
+}
+
+.form tr:hover {
+    background-color: #cececefe;
+}
+
+.form th {
+    background-color: rgba(9, 50, 101, 1);
+    height: 50px;
+    font-weight: bold;
+    font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+    color: #fff;
+}
+
+.tablehead {
+    position: sticky;
+    top: 86px;
+    z-index: 99;
+}
+
+.needtitle {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 10px 0;
+    font-family: 'Franklin Gothic Medium',
+        'Arial Narrow',
+        Arial,
+        sans-serif;
+    text-indent: 1.4em;
+}
+
+.need {
+    width: 90%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100px;
+    text-align: left;
+}
+
+.blank {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+}
+
+.foots {
+    font-size: 1.2em;
+    text-indent: 2em;
+    line-height: 1.8em;
+    padding: 0;
+    margin: 0;
+    font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+}
