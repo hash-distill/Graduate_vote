@@ -50,6 +50,12 @@
 | `/userShow` | 结果展示页 | 投票结束后向用户展示最终结果 |
 | `/end` | 结束页 | 投票流程结束页面 |
 
+> [!TIP]
+> 更新后的set页面，加上了三个参数的描述文字，并优化了盒子和css样式。
+
+![](https://cdn.jsdelivr.net/gh/hash-distill/PicGo-Repo@master/202602131527332.png)
+
+
 ---
 
 

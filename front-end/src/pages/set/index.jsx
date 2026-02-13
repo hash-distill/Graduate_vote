@@ -42,12 +42,52 @@ const Set = (() => {
     <div>
       <Header></Header>
       <div className={styles.main}>
-        <h3>每人限投：<input type="text" name="limit" onChange={handleForm} />
-          学生人数: <input type="text" name="students" onChange={handleForm} />
-          教师人数: <input type="text" name="teachers" onChange={handleForm} />
-          <button onClick={set_message}>提交</button></h3>
-      </div>
+        <h2 className={styles.title}>投票参数设置</h2>
 
+        <div className={styles.formGroup}>
+          <div className={styles.field}>
+            <label className={styles.label}>正选人数</label>
+            <input
+              type="number"
+              name="students"
+              className={styles.input}
+              placeholder="请输入"
+              onChange={handleForm}
+              min="1"
+            />
+            <p className={styles.hint}>本次投票需要选出的正选名额数量，最终入选人数 = 正选人数 + 2（候补）</p>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>评委人数</label>
+            <input
+              type="number"
+              name="teachers"
+              className={styles.input}
+              placeholder="请输入"
+              onChange={handleForm}
+              min="1"
+            />
+            <p className={styles.hint}>参与投票的评委（老师）总人数，所有评委投完后系统自动处理本轮结果</p>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>每人限投票数</label>
+            <input
+              type="number"
+              name="limit"
+              className={styles.input}
+              placeholder="请输入"
+              onChange={handleForm}
+              min="1"
+            />
+            <p className={styles.hint}>每位评委每轮投票最多可投的票数（重投时系统会自动调整）</p>
+          </div>
+        </div>
+
+        <button className={styles.submitBtn} onClick={set_message}>确认提交</button>
+        <p className={styles.note}>⚠ 提交后将初始化所有投票数据，请确认参数无误后再提交</p>
+      </div>
     </div>
   );
 })

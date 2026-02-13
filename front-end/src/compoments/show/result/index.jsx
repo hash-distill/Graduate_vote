@@ -10,7 +10,7 @@ import { API_BASE_URL } from "../../../config";
  * @param {Array} data - 学生数据列表
  * @param {number} startRank - 起始排名序号（默认 1）
  */
-const VoteTable = ({ title, subtitle, data, startRank = 1 }) => {
+const VoteTable = ({ title, subtitle, data, startRank = 1, showVotes = true }) => {
     if (!data || data.length === 0) return null;
 
     return (
@@ -20,15 +20,15 @@ const VoteTable = ({ title, subtitle, data, startRank = 1 }) => {
             <table>
                 <thead>
                     <tr className={styles.tablehead}>
-                        <th style={{ borderTopLeftRadius: 15 }}>排名</th>
+                        <th style={{ borderTopLeftRadius: 15 }}>序号</th>
                         <th style={{ minWidth: 260 }}>学院</th>
                         <th style={{ minWidth: 220 }}>专业</th>
                         <th style={{ minWidth: 80 }}>姓名</th>
                         <th>性别</th>
                         <th style={{ minWidth: 140 }}>政治面貌</th>
                         <th>学院排序</th>
-                        <th>面试序号</th>
-                        <th style={{ borderTopRightRadius: 15 }}>票数</th>
+                        <th style={{ borderTopRightRadius: showVotes ? 0 : 15 }}>面试序号</th>
+                        {showVotes && <th style={{ borderTopRightRadius: 15 }}>票数</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@ const VoteTable = ({ title, subtitle, data, startRank = 1 }) => {
                             <td><span className={styles.message}>{item.votePoli}</span></td>
                             <td><span className={styles.message}>{item.voteInstiSort}</span></td>
                             <td><span className={styles.message}>({item.voteInterSort})</span></td>
-                            <td><span className={styles.message}>{item.votePoll}</span></td>
+                            {showVotes && <td><span className={styles.message}>{item.votePoll}</span></td>}
                         </tr>
                     ))}
                 </tbody>
@@ -174,6 +174,7 @@ class Result extends Component {
                         title="首轮投票结果"
                         subtitle={`共 ${all.length} 名候选人参与投票`}
                         data={all}
+                        showVotes={false}
                     />
                 )}
 
@@ -210,6 +211,7 @@ class Result extends Component {
                     title={currentInfo.title}
                     subtitle={currentInfo.subtitle}
                     data={isFinished ? [...students, ...pre] : students}
+                    showVotes={false}
                 />
             </div>
         );

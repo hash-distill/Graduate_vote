@@ -82,7 +82,7 @@ class UserShow extends Component {
                 <h1>第 26 届研究生支教团选拔结果</h1>
                 <table>
                     <tr className={styles.tablehead}>
-                        <th style={{ minWidth: 80, borderTopLeftRadius: 15 }}>排名</th>
+                        <th style={{ minWidth: 80, borderTopLeftRadius: 15 }}>序号</th>
                         <th style={{ minWidth: 260 }}>学院</th>
                         <th style={{ minWidth: 100, borderTopRightRadius: 15 }}>姓名</th>
                     </tr>
