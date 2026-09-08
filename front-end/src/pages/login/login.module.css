@@ -1,0 +1,65 @@
+.main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2a5298, #3a6bd5);
+}
+
+.card {
+    width: 360px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 40px 36px;
+    box-sizing: border-box;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a2a4a;
+    text-align: center;
+    margin: 0 0 28px;
+    letter-spacing: 2px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #d0d7e2;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.input:focus {
+    border-color: #3a6bd5;
+}
+
+.msg {
+    color: #c0392b;
+    font-size: 13px;
+    margin: 12px 0 0;
+}
+
+.submitBtn {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: 12px 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #2a5298, #3a6bd5);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 4px;
+}
+
+.submitBtn:hover {
+    opacity: 0.9;
+}

@@ -15,7 +15,7 @@ class Totalcount extends Component {
     componentDidMount() {
         axios({
             method: 'post',
-            url: `${API_BASE_URL}/admin/getVoteResult`,
+            url: `${API_BASE_URL}/vote/status`,
             params: '',
             data: '',
         }).then(
@@ -34,7 +34,7 @@ class Totalcount extends Component {
         this.timer = setInterval(() => {
             axios({
                 method: 'post',
-                url: `${API_BASE_URL}/admin/getVoteResult`,
+                url: `${API_BASE_URL}/vote/status`,
                 params: '',
                 data: '',
             }).then(

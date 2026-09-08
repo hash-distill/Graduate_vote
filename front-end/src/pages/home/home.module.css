@@ -1,0 +1,103 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 78vh;
+    padding: 120px 20px 40px;
+}
+
+.card {
+    width: 620px;
+    max-width: 92%;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
+    padding: 46px 48px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 800;
+    color: #1a2a4a;
+    margin: 0 0 6px;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 15px;
+    color: #8896a8;
+    margin: 0 0 26px;
+    letter-spacing: 3px;
+}
+
+.status,
+.statusOk {
+    font-size: 18px;
+    line-height: 1.9;
+    margin: 6px 0;
+    color: #2c3e5a;
+}
+
+.statusOk {
+    color: #1e7e34;
+    font-weight: 600;
+}
+
+.btnRow {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+}
+
+.primaryBtn,
+.ghostBtn {
+    min-width: 180px;
+    padding: 13px 24px;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: transform 0.15s, box-shadow 0.2s;
+    border: none;
+}
+
+.primaryBtn {
+    color: #fff;
+    background: linear-gradient(135deg, #2a5298, #3a6bd5);
+    box-shadow: 0 4px 16px rgba(42, 82, 152, 0.3);
+}
+
+.primaryBtn:hover {
+    transform: translateY(-2px);
+}
+
+.ghostBtn {
+    color: #2a5298;
+    background: #fff;
+    border: 2px solid #2a5298;
+}
+
+.ghostBtn:hover {
+    background: #f0f4ff;
+}
+
+.adminRow {
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1px dashed #d8e0ec;
+}
+
+.linkBtn {
+    background: none;
+    border: none;
+    color: #3a6bd5;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 4px 10px;
+}

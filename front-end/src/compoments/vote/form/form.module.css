@@ -134,3 +134,21 @@ tr:nth-child(odd) {
     margin: 0;
     font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
 }
+/* 醒目警示条：与正文 .foots 明显区分 */
+.warn {
+    display: block;
+    margin: 14px auto 0;
+    padding: 10px 16px;
+    width: fit-content;
+    max-width: 92%;
+    border: 2px solid #e0002a;
+    border-radius: 10px;
+    background: #fff2f2;
+    color: #c00020;
+    font-size: 1.15em;
+    font-weight: bold;
+    line-height: 1.6em;
+    text-indent: 0;
+    text-align: center;
+    font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+}

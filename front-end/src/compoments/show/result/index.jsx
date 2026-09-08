@@ -91,7 +91,7 @@ class Result extends Component {
     fetchResult = () => {
         axios({
             method: 'post',
-            url: `${API_BASE_URL}/admin/getVoteResult`,
+            url: `${API_BASE_URL}/vote/status`,
         }).then(res => {
             if (res.data.msg !== 'success' || !res.data.data) return;
 
@@ -207,12 +207,30 @@ class Result extends Component {
                 })}
 
                 {/* 当前进行中的投票 / 最终结果 */}
-                <VoteTable
-                    title={currentInfo.title}
-                    subtitle={currentInfo.subtitle}
-                    data={isFinished ? [...students, ...pre] : students}
-                    showVotes={false}
-                />
+                {!isFinished && (
+                    <VoteTable
+                        title={currentInfo.title}
+                        subtitle={currentInfo.subtitle}
+                        data={students}
+                        showVotes={false}
+                    />
+                )}
+                {isFinished && (
+                    <>
+                        <VoteTable
+                            title="正选名单"
+                            subtitle={`共 ${students.length} 人`}
+                            data={students}
+                            showVotes={false}
+                        />
+                        <VoteTable
+                            title="候补名单"
+                            subtitle={`共 ${pre.length} 人`}
+                            data={pre}
+                            showVotes={false}
+                        />
+                    </>
+                )}
             </div>
         );
     }

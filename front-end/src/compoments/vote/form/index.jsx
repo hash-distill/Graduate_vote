@@ -4,52 +4,54 @@ import axios from 'axios'
 import Footer from '../footer';
 import Confirm from '../confirm';
 import { API_BASE_URL } from '../../../config';
-var checkLimit = 3;
+var checkLimit = 0;
 
-// 投票表单
+// 投票表单（按设备限一票：无需口令/链接，设备标识由 axios 拦截器自动携带）
 class Form extends Component {
   state = {
     student_list: [],
     checked_num: 0,
-    students: [
-      { "id": "1", "sex": "男", "identity": "预备党员", "name": '李益方', "school": "数学与统计学院" },
-      { "id": "2", "sex": "女", "identity": "预备党员", "name": '王赫奇', "school": "文学院" },
-      { "id": "3", "sex": "女", "identity": "共青团员", "name": '王曼茜', "school": "美术学院" },
-      { "id": "4", "sex": "女", "identity": "预备党员", "name": '殷子惠', "school": "地理科学学院" },
-      { "id": "5", "sex": "女", "identity": "共青团员", "name": '赫华', "school": "地理科学学院" },
-      { "id": "6", "sex": "男", "identity": "预备党员", "name": '张传民', "school": "美术学院" },
-      { "id": "7", "sex": "男", "identity": "预备党员", "name": '殷琪超', "school": "美术学院" },
-      { "id": "8", "sex": "女", "identity": "预备党员", "name": '盛美玲', "school": "政法学院" },
-      { "id": "9", "sex": "女", "identity": "预备党员", "name": '冯荃', "school": "心理学院" },
-      { "id": "10", "sex": "女", "identity": "共青团员", "name": '杨雪娇', "school": "马克思主义学部" },
-      { "id": "11", "sex": "女", "identity": "预备党员", "name": '赵梓欣', "school": "心理学院" },
-      { "id": "12", "sex": "女", "identity": "共青团员", "name": '杨笑雨', "school": "外国语学院" }
-    ],
+    students: [],                 // 真实数据，由后端下发
     btnVisible: false,
-    btnCon: ""
+    btnCon: "",
+    deviceId: null,
+    alreadyVoted: false,          // 本设备本轮是否已投（防重复）
+    loadError: "",
+    loaded: false
   }
 
-  // 学生获取
+  // 拉取名单
   componentDidMount() {
     axios.get(`${API_BASE_URL}/users`).then(res => {
-      // console.log(res.data.data.revote, "====")
-      checkLimit = res.data.data.limit
-      // console.log(checkLimit)
-      this.setState((state) => {
-        return {
-          students: res.data.data.students
+      if (res.data && res.data.result === true) {
+        const data = res.data.data;
+        checkLimit = data.limit;
+        this.setState({
+          students: data.students || [],
+          deviceId: data.deviceId,
+          alreadyVoted: !!data.alreadyVoted,
+          loadError: "",
+          loaded: true
+        });
+        if (data.alreadyVoted) {
+          this.setState({ btnVisible: true, btnCon: "本设备已投过，请勿重复提交" });
         }
-      }, () => {
-        // console.log(this.state.students) 
-      })
-    })
+      } else {
+        const msg = (res.data && res.data.msg) || "加载失败";
+        this.setState({ loadError: msg, loaded: true, btnVisible: true, btnCon: msg });
+      }
+    }).catch(() => {
+      this.setState({ loadError: "无法连接服务器", loaded: true });
+      this.setVisible(true, "无法连接服务器，请确认后端已启动");
+    });
   }
 
   // 通知提示显示设置
-  setVisible(data) {
+  setVisible(data, con) {
     this.setState((state) => {
       return {
-        btnVisible: data
+        btnVisible: data,
+        btnCon: con || state.btnCon
       }
     })
   }
@@ -57,8 +59,8 @@ class Form extends Component {
   // 投票数量修改 & 判断
   checked_num = e => {
     const q = e.target
+    if (this.state.alreadyVoted) { e.target.checked = false; return; }
     if (e.target.checked == false) {
-      // console.log(1)
       let list = this.state.student_list
       let value = e.target.dataset.id
       list.splice(list.indexOf(value), 1)
@@ -67,12 +69,9 @@ class Form extends Component {
           student_list: list,
           checked_num: state.checked_num - 1
         }
-      }, () => {
-        // console.log(this.state.student_list)
       })
     } else if (this.state.checked_num >= checkLimit) {
-      // alert("选人到达上限")
-      this.setVisible(true)
+      this.setVisible(true, "选人到达上限")
       e.target.checked = false
     } else {
       this.choose(q)
@@ -82,19 +81,17 @@ class Form extends Component {
   // 选中后人数增加
   choose = q => {
     let list = this.state.student_list
-    // console.log(this.state.checked_num)
     list.push(q.dataset.id)
     this.setState((state) => {
       return {
         student_list: list,
         checked_num: state.checked_num + 1
       }
-    }, () => {
-      // console.log(this.state.student_list)
     })
   }
 
   render() {
+    const { students, loadError, alreadyVoted, loaded } = this.state;
     return (
       <div>
         <div className={styles.form}>
@@ -114,67 +111,61 @@ class Form extends Component {
             <p className={styles.foots}>9．其他相关事宜按照《东北师范大学推荐优秀应届本科毕业生免试攻读硕士学位研究生工作实施办法（修订）》执行。</p>
             <span className={styles.needtitle}>二、投票说明</span>
             <p className={styles.foots}>
-              1. 我校研究生支教团推免名额为25人，请选择不超过25人，在投票系统页面“是否同意”栏中点击。</p>
+              1. 请按管理员公布的应选名额投票，在投票系统页面“是否同意”栏中点击。</p>
             <p className={styles.foots}>
-              2. 共选拔25个入围人选和2个候补人选，投票完毕后，如出现平票的情况，系统会进行提示，请对平票人选进行再次投票。</p>
+              2. 每台设备每轮只能投一次；投票完毕后，如出现平票，系统会提示对平票人选再次投票。</p>
+            {alreadyVoted && <span className={styles.warn}>⚠ 本设备已投过本轮，请勿重复投票。</span>}
+            {loadError && <span className={styles.warn}>⚠ {loadError}</span>}
           </div>
 
-          <table>
-            <tr className={styles.tablehead}>
-              <th style={{ borderTopLeftRadius: 15 }}>序号</th>
-              <th>学院</th>
-              <th>专业</th>
-              <th>姓名</th>
-              <th>性别</th>
-              <th>政治面貌</th>
-              <th>学院排序</th>
-              <th>面试序号</th>
-              <th style={{ borderTopRightRadius: 15 }}>是否同意</th>
-            </tr>
-
-            {this.state.students.map((item, index) => {
-              let sex = '男'
-              if (item.voteGender == 0) {
-                sex = '女'
-              }
-              return (
-                <tr className={styles.student}>
-                  <td>
-                    <span className={styles.message}>{index + 1} </span>
-                  </td>
-                  <td>
-                    <span className={styles.message}> {item.voteInsti}</span>
-                  </td>
-                  <td>
-                    <span className={styles.message}>{item.voteMajor} </span>
-                  </td>
-                  <td>
-                    <span className={styles.message}>{item.voteName} </span>
-                  </td>
-                  <td>
-                    <span className={styles.message}>{sex} </span>
-                  </td>
-                  <td>
-                    <span className={styles.message}>{item.votePoli} </span>
-                  </td>
-                  <td>
-                    <span className={styles.message}>{item.voteInstiSort} </span>
-                  </td>
-                  <td>
-                    <span className={styles.message}>({item.voteInterSort}) </span>
-                  </td>
-                  <td>
-                    <input type='checkbox' name='student' key={item.voteId} onClick={this.checked_num} data-id={item.voteId} />
-                  </td>
+          {loaded && !loadError && (
+            <table>
+              <tbody>
+                <tr className={styles.tablehead}>
+                  <th style={{ borderTopLeftRadius: 15 }}>序号</th>
+                  <th>学院</th>
+                  <th>专业</th>
+                  <th>姓名</th>
+                  <th>性别</th>
+                  <th>政治面貌</th>
+                  <th>学院排序</th>
+                  <th>面试序号</th>
+                  <th style={{ borderTopRightRadius: 15 }}>是否同意</th>
                 </tr>
-              )
-            })}
-            <div className={styles.blank}></div>
-          </table>
+
+                {students.map((item, index) => {
+                  let sex = '男'
+                  if (item.voteGender == 0) {
+                    sex = '女'
+                  }
+                  return (
+                    <tr className={styles.student} key={item.voteId}>
+                      <td><span className={styles.message}>{index + 1} </span></td>
+                      <td><span className={styles.message}> {item.voteInsti}</span></td>
+                      <td><span className={styles.message}>{item.voteMajor} </span></td>
+                      <td><span className={styles.message}>{item.voteName} </span></td>
+                      <td><span className={styles.message}>{sex} </span></td>
+                      <td><span className={styles.message}>{item.votePoli} </span></td>
+                      <td><span className={styles.message}>{item.voteInstiSort} </span></td>
+                      <td><span className={styles.message}>({item.voteInterSort}) </span></td>
+                      <td>
+                        <input type='checkbox' name='student' key={item.voteId}
+                          onClick={this.checked_num} data-id={item.voteId}
+                          disabled={alreadyVoted || !loaded} />
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
 
-        <Footer limit={checkLimit} checked={this.state.checked_num} list={this.state.student_list}></Footer>
-        <Confirm visible={this.state.btnVisible} fn={this.setVisible.bind(this)} title="系统提示" con="选人到达上限"></Confirm>
+        {loaded && !loadError && (
+          <Footer limit={checkLimit} checked={this.state.checked_num} list={this.state.student_list}
+            disabled={alreadyVoted || this.state.student_list.length === 0}></Footer>
+        )}
+        <Confirm visible={this.state.btnVisible} fn={this.setVisible.bind(this)} title="系统提示" con={this.state.btnCon}></Confirm>
       </div>
     );
   }

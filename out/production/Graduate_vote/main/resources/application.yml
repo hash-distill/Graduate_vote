@@ -31,10 +31,3 @@ mybatis:
 
 server:
   port: 8081
-
-# 管理员登录口令（鉴权设计见 docs/投票系统鉴权与身份投票设计.md §4）
-# 优先级：环境变量 ADMIN_PASSWORD → 缺省值 2026。
-# 例如在 IDEA 运行配置/系统中设置 ADMIN_PASSWORD=你的口令 后启动后端即可生效。
-app:
-  admin:
-    password: ${ADMIN_PASSWORD:2026}

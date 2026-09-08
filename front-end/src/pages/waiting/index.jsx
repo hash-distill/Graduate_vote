@@ -12,20 +12,22 @@ const Waiting = (() => {
         const timer = setInterval(() => {
             axios({
                 method: 'post',
-                url: `${API_BASE_URL}/admin/getVoteResult`,
+                url: `${API_BASE_URL}/vote/status`,
                 params: '',
                 data: '',
             }).then(
                 res => {
-                    if (res.data.data.pre) {
+                    const d = res.data && res.data.data;
+                    if (!d) return;   // 后端未初始化/失败：保持等待，下一轮再试
+                    if (d.pre) {
                         clearInterval(timer);
                         navigate("/end", { replace: true });
                     }
-                    else if (res.data.data.isRevote != 0 && (res.data.data.teachersNum == 0 || res.data.data.teachersNum == res.data.data.teachers_all)) {
+                    else if (d.isRevote != 0 && (d.teachersNum == 0 || d.teachersNum == d.teachers_all)) {
                         clearInterval(timer);
                         navigate("/vote", { replace: true });
                     }
-                })
+                }).catch(() => { /* 网络异常：保持等待 */ })
         }, 3000);
 
         return () => clearInterval(timer);

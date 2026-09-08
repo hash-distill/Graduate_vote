@@ -19,7 +19,7 @@ class UserShow extends Component {
     componentDidMount() {
         axios({
             method: 'post',
-            url: `${API_BASE_URL}/admin/getVoteResult`,
+            url: `${API_BASE_URL}/vote/status`,
             params: '',
             data: '',
         }).then(
@@ -47,7 +47,7 @@ class UserShow extends Component {
         this.timer = setInterval(() => {
             axios({
                 method: 'post',
-                url: `${API_BASE_URL}/admin/getVoteResult`,
+                url: `${API_BASE_URL}/vote/status`,
                 params: '',
                 data: '',
             }).then(
@@ -103,7 +103,12 @@ class UserShow extends Component {
                         )
                     })}
 
-                    {this.state.pre.map(item => {
+                                        {this.state.pre.length > 0 && (
+                        <tr className={styles.tablehead}>
+                            <th colSpan="3" style={{ background: '#2a5298' }}>候补名单（{this.state.pre.length} 人）</th>
+                        </tr>
+                    )}
+{this.state.pre.map(item => {
                         i++;
                         return (
                             <tr className={styles.student}>

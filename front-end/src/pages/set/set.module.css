@@ -99,3 +99,50 @@
     color: #c0392b;
     margin-top: 14px;
 }
+.ticketBox {
+    background: #f4f7fc;
+    border: 1px dashed #3a6bd5;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 8px;
+}
+
+.ticketArea {
+    width: 100%;
+    min-height: 120px;
+    margin: 8px 0 12px;
+    padding: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    border: 1px solid #d0d7e2;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: Consolas, Menlo, monospace;
+    resize: vertical;
+}
+
+.btnRow {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.error {
+    color: #c0392b;
+    font-size: 14px;
+    margin: 14px 0 0;
+    text-align: center;
+}
+
+.logoutBtn {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #8896a8;
+    background: transparent;
+    border: 1px solid #d0d7e2;
+    border-radius: 10px;
+    cursor: pointer;
+}

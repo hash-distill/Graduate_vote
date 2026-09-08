@@ -9,7 +9,7 @@ const Footer = ((props) => {
             <div className={styles.limit}>每人限投 <span className={styles.limitmark}>{props.limit}</span> 票
                 , 已投<span className={styles.limitmark}> {props.checked} </span>票
             </div>
-            <Submit limit={props.limit} check={props.checked} list={props.list}></Submit>
+            <Submit limit={props.limit} check={props.checked} list={props.list} disabled={props.disabled}></Submit>
         </div>
     )
 })

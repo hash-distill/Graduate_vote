@@ -5,13 +5,16 @@ import Waiting from './pages/waiting'
 import Set from './pages/set'
 import End from './pages/end'
 import UserShow from './pages/userShow'
-import { Routes, Route, Navigate } from "react-router-dom"
+import Login from './pages/login'
+import Home from './pages/home'
+import { Routes, Route } from "react-router-dom"
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path='/' element={<Navigate to='/vote' />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/vote' element={<Vote />} />
         <Route path='/show' element={<Show />} />
         <Route path='/waiting' element={<Waiting />} />
